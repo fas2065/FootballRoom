@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FootballRoom</string>
+    <string name="program_title">Program Title</string>
+
+    <string name="title_workouts">Movies</string>
+    <string name="title_programs">Directors</string>
+    <string name="menu_item_delete_list_data">Delete list data</string>
+    <string name="menu_item_re_create_database">Re-create database</string>
+    <string name="program">Program</string>
+    <string name="director_full_name">Full Name</string>
+    <string name="dialog_workout_title">Workout</string>
+    <string name="dialog_program_title">Program</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+</resources>

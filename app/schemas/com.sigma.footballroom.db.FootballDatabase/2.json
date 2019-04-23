@@ -1,0 +1,194 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "b4d9550b1eb5f68455e47255161f062c",
+    "entities": [
+      {
+        "tableName": "exercise",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_exercise_title",
+            "unique": true,
+            "columnNames": [
+              "title"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_exercise_title` ON `${TABLE_NAME}` (`title`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "program",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "pId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "pId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_program_title",
+            "unique": true,
+            "columnNames": [
+              "title"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_program_title` ON `${TABLE_NAME}` (`title`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "workout",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `programId` INTEGER NOT NULL, FOREIGN KEY(`programId`) REFERENCES `program`(`pId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "programId",
+            "columnName": "programId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_workout_title",
+            "unique": false,
+            "columnNames": [
+              "title"
+            ],
+            "createSql": "CREATE  INDEX `index_workout_title` ON `${TABLE_NAME}` (`title`)"
+          },
+          {
+            "name": "index_workout_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE  INDEX `index_workout_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "program",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "programId"
+            ],
+            "referencedColumns": [
+              "pId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "workout_exercise",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`workoutId` INTEGER NOT NULL, `exerciseId` INTEGER NOT NULL, PRIMARY KEY(`workoutId`, `exerciseId`), FOREIGN KEY(`exerciseId`) REFERENCES `exercise`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`workoutId`) REFERENCES `workout`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "workoutId",
+            "columnName": "workoutId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exerciseId",
+            "columnName": "exerciseId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "workoutId",
+            "exerciseId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "exercise",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "exerciseId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "workout",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "workoutId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b4d9550b1eb5f68455e47255161f062c\")"
+    ]
+  }
+}
